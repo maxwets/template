@@ -10,7 +10,7 @@ namespace hashstr {
 
 	template <typename T = char>
 	__attribute__((noinline))
-	constexpr uint32_t JENKINS(const T* s)
+	inline constexpr uint32_t JENKINS(const T* s)
 	{
 		if (!s) return 0;
 		uint32_t hash = 0;
@@ -37,7 +37,7 @@ namespace hashstr {
 
 	template <typename T = char>
 	__attribute__((noinline))
-	constexpr uint32_t FNV1A(const T* s)
+	inline constexpr uint32_t FNV1A(const T* s)
 	{
 		if (!s)
 			return 0;
@@ -59,5 +59,7 @@ namespace hashstr {
 		return hash;
 	}
 }
+
+#define HASH_STR( x ) ( hashstr::JENKINS( x ) )
 
 #endif // __LIB_HASHSTR_H

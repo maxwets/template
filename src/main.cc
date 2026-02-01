@@ -4,11 +4,14 @@
 #include "define.h"
 #include "resolve.h"
 #include "hashstr.h"
+#include "xorstr.h"
 
 // executable
 EXTERN_C int
 mainCRTStartup(void)
 {
+	API(KERNEL32, LoadLibraryA)(XORSTR("user32"));
+	API(USER32, MessageBoxA)(NULL, XORSTR("Hello, world !"), XORSTR("Message"), NULL);
 	return ERROR_SUCCESS;
 }
 
@@ -17,6 +20,7 @@ EXTERN_C BOOL WINAPI
 DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
 	switch (dwReason) {
+		case DLL_PROCESS_ATTACH:
 			break;
 		case DLL_THREAD_ATTACH:
 			break;
@@ -25,5 +29,5 @@ DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 		case DLL_PROCESS_DETACH:
 			break;
 	}
-	return ERROR_SUCCESS;
+	return TRUE;
 }

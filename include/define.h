@@ -6,6 +6,8 @@
 #include <stdint.h>
 #include <stddef.h>
 
+#include "hashstr.h"
+
 #define memset __builtin_memset
 #define memcpy __builtin_memcpy
 #define memcmp __builtin_memcmp
@@ -36,5 +38,11 @@
 
 #define VA_COUNT(...) VA_COUNT_IMPL(__VA_ARGS__,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0)
 #define VA_COUNT_IMPL(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,N,...) ( N )
+
+#define D_API( x )  __typeof__( x ) * x
+
+#define WSTR(x) L ## x
+#define WSTR_DLL(x) WSTR(x) L".dll"
+#define API(m, f) ((__typeof__(f)*) resolve::Function(resolve::Module(HASH_STR(WSTR_DLL(#m))), HASH_STR(#f)))
 
 #endif // __LIB_DEFINE_H
